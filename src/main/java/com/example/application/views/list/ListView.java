@@ -40,6 +40,13 @@ public class ListView extends VerticalLayout {
         );
 
         updateList();
+        closeEditor();
+    }
+
+    private void closeEditor() {
+        form.setContact(null);
+        form.setVisible(false);
+        removeClassName("editing");
     }
 
     private void updateList() {
@@ -59,6 +66,27 @@ public class ListView extends VerticalLayout {
     private void configureForm() {
         form = new ContactForm(crmService.findAllComapnies(), crmService.findAllStatuses());
         form.setWidth("25em");
+
+        form.addSaveListener(this::saveContact);
+        form.addDeleteListener(this::deleteContact);
+        form.addCloseListener(this::cancel);
+    }
+
+    private void cancel(ContactForm.CloseEvent closeEvent) {
+        closeEditor();
+        grid.asSingleSelect().clear();
+    }
+
+    private void deleteContact(ContactForm.DeleteEvent deleteEvent) {
+        crmService.deleteContact(deleteEvent.getContact());
+        updateList();
+        closeEditor();
+    }
+
+    private void saveContact(ContactForm.SaveEvent saveEvent) {
+        crmService.saveContact(saveEvent.getContact());
+        updateList();
+        closeEditor();
     }
 
     private Component getToolbar() {
@@ -68,10 +96,16 @@ public class ListView extends VerticalLayout {
         filterText.addValueChangeListener(e->updateList());
 
         Button addContactButton = new Button("Add contact");
+        addContactButton.addClickListener(e->addContact());
 
         HorizontalLayout toolbar = new HorizontalLayout(filterText, addContactButton);
         toolbar.addClassName("toolbar");
         return toolbar;
+    }
+
+    private void addContact() {
+        grid.asSingleSelect().clear();
+        editContact(new Contact());
     }
 
     private void configureGrid() {
@@ -81,6 +115,18 @@ public class ListView extends VerticalLayout {
         grid.addColumn(contact -> contact.getStatus().getName()).setHeader("Status");
         grid.addColumn(contact -> contact.getCompany().getName()).setHeader("Company");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
+
+        grid.asSingleSelect().addValueChangeListener(e-> editContact(e.getValue()));
+    }
+
+    private void editContact(Contact contact) {
+        if(contact == null){
+            closeEditor();
+        }else{
+            form.setContact(contact);
+            form.setVisible(true);
+            addClassName("editing");
+        }
     }
 
 }
