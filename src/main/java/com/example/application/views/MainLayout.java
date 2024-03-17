@@ -17,7 +17,7 @@ public class MainLayout extends AppLayout {
     }
 
     private void createHeader() {
-        H1 logo = new H1("VAULTCODE CRM");
+        H1 logo = new H1("VAULT-CODE CRM");
         logo.addClassNames("text-l", "m-m");
 
         HorizontalLayout header = new HorizontalLayout(new DrawerToggle(), logo);
@@ -35,7 +35,8 @@ public class MainLayout extends AppLayout {
         listView.setHighlightCondition(HighlightConditions.sameLocation());
 
         addToDrawer(new VerticalLayout(
-                listView
+                listView,
+                new RouterLink("Dashboard", DashboardView.class)
         ));
     }
 }
