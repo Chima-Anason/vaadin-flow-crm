@@ -9,7 +9,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @Route("login")
-@PageTitle("Login | Vaadin CRM")
+@PageTitle("Login | Vault-Tech CRM")
 public class LoginView extends VerticalLayout implements BeforeEnterListener {
 
     private LoginForm login = new LoginForm();

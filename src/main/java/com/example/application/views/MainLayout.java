@@ -22,7 +22,7 @@ public class MainLayout extends AppLayout {
     }
 
     private void createHeader() {
-        H1 logo = new H1("Vaadin CRM");
+        H1 logo = new H1("Vault-Tech CRM");
         logo.addClassNames("text-l", "m-m");
 
         Button logOut = new Button("Log out", e-> securityService.logout());
