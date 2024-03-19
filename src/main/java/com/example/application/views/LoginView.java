@@ -20,6 +20,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterListener {
         setJustifyContentMode(JustifyContentMode.CENTER);
 
         login.setAction("login");
+        login.getElement().getThemeList().add("dark");
 
         add(
                 new H1("Vaadin CRM"),
