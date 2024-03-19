@@ -23,7 +23,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterListener {
         login.getElement().getThemeList().add("dark");
 
         add(
-                new H1("Vaadin CRM"),
+                new H1("Vault-Tech CRM"),
                 login
         );
     }
